@@ -210,7 +210,7 @@ MIT License - feel free to use for educational purposes
 
 For issues or questions:
 - Create an issue on GitHub
-- Contact: [your-email]
+- Contact: [utsavvaland0@gmail.com]
 
 ---
 
