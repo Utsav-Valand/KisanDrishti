@@ -62,7 +62,14 @@ async function getPricePrediction() {
 }
 
 // Example 3: Using with real mandi data from Supabase
+import { createClient } from '@supabase/supabase-js';
+
 async function predictFromMandiData(cropName: string, district: string) {
+    const supabase = createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+
     // Fetch last 90 days of mandi prices
     const { data: mandiPrices } = await supabase
         .from('mandi_prices')
@@ -77,7 +84,7 @@ async function predictFromMandiData(cropName: string, district: string) {
     }
 
     // Format data for prediction
-    const last90DaysPrices = mandiPrices.map(p => ({
+    const last90DaysPrices = mandiPrices.map((p: any) => ({
         date: p.date,
         price: p.price_modal,
         arrivals: p.arrivals || 0
@@ -116,8 +123,16 @@ async function predictFromMandiData(cropName: string, district: string) {
     return await response.json();
 }
 
-// Example 4: Display in Farmer Dashboard
-function PricePredictionCard({ prediction }) {
+// Example 4: Display in Farmer Dashboard (React/TSX component)
+// Note: This should be in a .tsx file, not .ts
+/*
+import { PredictionOutput } from './price-predictor';
+
+interface PricePredictionCardProps {
+    prediction: PredictionOutput;
+}
+
+function PricePredictionCard({ prediction }: PricePredictionCardProps) {
     return (
         <div className= "bg-white rounded-lg shadow p-4" >
         <h3 className="font-bold text-lg mb-2" > भाव का अनुमान(Price Prediction) </h3>
@@ -169,5 +184,6 @@ function PricePredictionCard({ prediction }) {
         </div>
     );
 }
+*/
 
-export { exampleInput, getPricePrediction, predictFromMandiData, PricePredictionCard };
+export { exampleInput, getPricePrediction, predictFromMandiData };

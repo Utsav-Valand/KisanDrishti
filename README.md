@@ -8,6 +8,7 @@ KisanDrishti is a comprehensive mobile-first web platform that helps Indian farm
 
 ### For Farmers
 - **Live Mandi Prices**: Real-time prices from nearby APMC mandis
+- **AI Price Predictions**: 3/7/14 day price forecasts with confidence scores using time-series analysis
 - **AI Recommendations**: Best market and best day to sell suggestions
 - **Price Trends**: Visual charts showing 7-day price movements
 - **Direct Buyer Connect**: Receive offers from private buyers, FPOs, and traders
@@ -197,10 +198,31 @@ PWA features:
 
 This is a demo project. For production use:
 1. Implement actual SMS/WhatsApp integration (Twilio/MSG91)
-2. Add ML models for better price predictions
-3. Integrate real-time mandi price APIs
+2. ~~Add ML models for better price predictions~~ ✅ **DONE** - Time-series + regression prediction engine
+3. Integrate real-time mandi price APIs (data.gov.in APMC API)
 4. Add payment gateway for transactions
 5. Implement proper admin panel
+6. Add weather API integration for prediction accuracy
+7. Implement prediction caching (Redis/Supabase)
+
+## 🤖 AI Features
+
+### Price Prediction Engine
+- **Endpoint**: `POST /api/ai/predict-price`
+- **Features**: 3/7/14 day price forecasts with confidence scores
+- **Algorithm**: Time-series analysis (MA7/14/30) + regression (arrivals, weather, demand)
+- **Documentation**: See [docs/PRICE_PREDICTION_ENGINE.md](docs/PRICE_PREDICTION_ENGINE.md)
+
+**Test the API:**
+```powershell
+# Windows PowerShell
+.\test-api.ps1
+
+# Or manually
+Invoke-RestMethod -Uri "http://localhost:3000/api/ai/predict-price" `
+  -Method POST -ContentType "application/json" `
+  -Body (Get-Content test-data.json -Raw)
+```
 
 ## 📄 License
 
